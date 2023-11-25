@@ -7,6 +7,9 @@ let hasTime = true;
 let startTimerIsRunning = false;
 let lifes = 3;
 
+var heartOne = document.getElementById('image-heart-1');
+var heartTwo= document.getElementById('image-heart-2');
+var heartTree = document.getElementById('image-heart-3');
 
 function generateEquation(){   
     if(startTimerIsRunning == false) 
@@ -61,12 +64,18 @@ function checkAnswer(){
     }
     else if(hasTime)
     {        
-        alert('\u{2639} Wrong answer!\nTry again!\n\nSCORE -1 !!!');
-        score--;
-        lifes--;
-        document.getElementById('score').innerText = score;
-        document.getElementById('answer').value = '';    
-        time = 7.0;         
+        if(lifes == 1){
+            openGameOverPopup();
+            score--;
+            lifes--;
+        }else{
+            openWrongAnswerPopup(); 
+            score--;
+            lifes--;
+            document.getElementById('score').innerText = score;
+            document.getElementById('answer').value = '';    
+            time = 7.0;   
+        }      
     }
 }
 
@@ -74,8 +83,7 @@ function startTimer(){
     hasTime = true;
     time = 7.0;
     let timer = setInterval(() => {
-        time--;
-        console.log('timer: ' + timer + 'time: ' + time);
+        time--;        
         if(time <= 0)
         {
             hasTime = false;
@@ -85,7 +93,12 @@ function startTimer(){
         } 
         
         if(lifes == 0)
-        {            
+        {     
+            heartOne.style.display = 'none';         
+            heartTwo.style.display = 'none';   
+            heartTree.style.display = 'none';
+            closeTimerPopup();
+            
             hasTime = false;
             if(lifes < 0)
             {
@@ -94,16 +107,30 @@ function startTimer(){
             clearInterval(timer);
             startTimerIsRunning = false;
             openGameOverPopup();
-        }     
-        document.getElementById('time').innerText = time;
-        document.getElementById('lifes').innerText = lifes;
+        } 
+        
+        if(lifes == 1){         
+            heartTwo.style.display = 'none';    
+            heartTree.style.display = 'none';
+        }
+        if(lifes == 2){                  
+            heartTree.style.display = 'none';
+        }
+        if(lifes == 3){         
+            heartOne.style.display = 'flex';         
+            heartTwo.style.display = 'flex';   
+            heartTree.style.display = 'flex';
+        }
+        document.getElementById('time').innerText = time; 
+        document.getElementById('score').innerText = score;
     }, 1000);    
 }
-
 
 var confirmAnswerButton = document.getElementById('answer-button');
 var closeTimerPopupButton = document.getElementById('close-timer-popup-button');
 var closeGameOverPopupButton = document.getElementById('close-game-over-popup-button');
+var wrongAnswerPopupButton = document.getElementById('close-wrong-answer-popup-button');
+
 
 confirmAnswerButton.addEventListener('click', checkAnswer);
 document.getElementById('answer').addEventListener('keyup', function(e){
@@ -129,13 +156,21 @@ document.getElementById('close-timer-popup-button').addEventListener('keyup', fu
 });
 document.getElementById('close-game-over-popup-button').addEventListener('keyup', function(e){
     if (e.key === 'Enter'){        
-        closeGameOverPopup();
-        generateEquation();
+        closeGameOverPopup();        
+    }        
+  });
+
+wrongAnswerPopupButton.addEventListener('click', function() {
+    closeWrongAnswerPopup();
+});
+document.getElementById('close-wrong-answer-popup-button').addEventListener('keyup', function(e){
+    if (e.key === 'Enter'){        
+        closeWrongAnswerPopup();       
     }        
   });
 
 function openTimerPopup() {
-    document.getElementById('timer-popup').style.display = 'block';  
+    document.getElementById('timer-popup').style.display = 'flex';  
     score--;
     lifes--;  
 }
@@ -146,15 +181,31 @@ function closeTimerPopup() {
 
 
 function openGameOverPopup() {
-    document.getElementById('game-over-popup').style.display = 'block';       
+    document.getElementById('game-over-popup').style.display = 'flex';      
+    document.getElementById('player-final-score').innerText = score;    
 }
+
 
 function closeGameOverPopup() {
     document.getElementById('game-over-popup').style.display = 'none';
+    startNewGame();
+}
+
+function closeWrongAnswerPopup() {
+    document.getElementById('wrong-answer-popup').style.display = 'none';
+}
+
+
+function openWrongAnswerPopup() {
+    document.getElementById('wrong-answer-popup').style.display = 'flex';       
+}
+
+function startNewGame() {
     lifes = 3;
-    score = 0;
-    level = 1;
-    generateEquation();
+    score = 0;    
+    document.getElementById('score').innerText = score;   
+    document.getElementById('answer').value = '';  
+    generateEquation();      
 }
 
 generateEquation();

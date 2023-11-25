@@ -12,22 +12,32 @@
     <div id="top">                
         <p>Time: <span id="time"></span></p>       
     </div>            
-    <div id="top">
-        <p>Time: <span id="lifes"></span></p>  
-    </div>     
+    <div id="image-container">
+        <p>Lifes: <span id="lifes"></span></p>
+        <img id="image-heart-1" src="https://cdn.pixabay.com/photo/2014/04/02/10/47/red-304570_640.png" alt="Heart 1">
+        <img id="image-heart-2" src="https://cdn.pixabay.com/photo/2014/04/02/10/47/red-304570_640.png" alt="Heart 2">
+        <img id="image-heart-3" src="https://cdn.pixabay.com/photo/2014/04/02/10/47/red-304570_640.png" alt="h2 3">
+    </div>   
         
         <div id="container">
 
             <div id="timer-popup">
-                <h2>Twój Popup</h2>
-                <p>Czas się skończył!</p>
-                <button id="close-timer-popup-button">Zamknij</button>
+                <h2>Your time for answer has ended!</h2>
+                <p>Life -1 and score -1!</p>
+                <button id="close-timer-popup-button">Try answer again!</button>
             </div>
 
             <div id="game-over-popup">
                 <h2>GAME OVER!</h2>
-                <p>Straciłęś wszystkie życia!</p>
-                <button id="close-game-over-popup-button">Zagraj od nowa!</button>
+                <p>You've lost all lifes!</p>
+                <p>Final score: <span id="player-final-score"></span></p>
+                <button id="close-game-over-popup-button">Start new game!</button>
+            </div>
+
+            <div id="wrong-answer-popup">
+                <h2>Wrong answer!</h2>       
+                <p>Life -1 and score -1!</p>         
+                <button id="close-wrong-answer-popup-button">Try again!</button>
             </div>
             
             <div id="equation-container">
@@ -40,7 +50,8 @@
                 <p>Score: <span id="score">0</span></p>                
                 <p>Level: <span id="level">1</span></p>
             </div>
-            <p id="game-information">For every right answer player gets +1pkt and for wrong answer -1pkt</p> 
+            <p id="game-information">Player have 3 lifes. For every right answer player gets +1pkt and for wrong answer -1pkt and -1 life. 
+                If player have 0 lifes the game is over.</p> 
         </div>
         <script src="script.js"></script>
 </body>
